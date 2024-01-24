@@ -1,0 +1,54 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Based",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#comments"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.Based",
+				"match": "\\b(друк|ввід|ввід_числа|якщо|інакше|інакше_якщо|поки|для_кожного|повернути|функція|змінна|ціле|дійсне|рядок|логічне|символ|кінець)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.Based",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.Based",
+					"match": "\\\\."
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.assignment.Based",
+					"match": "\\b(\\+=|-=|\\*=|\\+\\+|--|==|!=|<|>|<=|>=)\\b"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.hash.Based",
+					"match": "#.*$"
+				}
+			]
+		}		
+	},
+	"scopeName": "source.based"
+}
