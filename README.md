@@ -436,7 +436,7 @@ _***Примітка!*** Шлях до файлу, який ми імпорту�
 
 ---
 
-**_[Дивитись код IDE](<[./Based%20IDE/](https://github.com/NikitaBerezhnyj/NUB_IDE)>)_**
+**_[Дивитись код IDE](https://github.com/NikitaBerezhnyj/NUB_IDE)_**
 
 ## Розширення для VS code
 
@@ -901,7 +901,7 @@ You can download and learn more about NUB IDE [here](https://github.com/NikitaBe
 
 ---
 
-**_[See the IDE code](./Based%20IDE/)_**
+**_[See the IDE code](https://github.com/NikitaBerezhnyj/NUB_IDE)_**
 
 ## Extensions for VS code
 
