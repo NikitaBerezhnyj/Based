@@ -8,15 +8,13 @@ Based repository has [Ukrainian :ukraine:](#мова-програмування-
   <img src='./VS Code Extintion/based-extantion/icon-based.png' alt='Based icon' style="width:50%">
 </p>
 
-***Мова програмування Based*** - це базована мова програмування з відкритим вихідним кодом, створена в Україні з метою написання ще більш базованого коду.
+**_Мова програмування Based_** - це проста й незамислувата мова програмування з відкритим вихідним кодом, створена шляхом модифікації коду іншого навчального проекту під назвою [py-myopl-code](https://github.com/davidcallanan/py-myopl-code).
 
-Головною метою Based є збільшення кількості коду українською мовою. Вона має всі необхідні базові конструкції, такі як: умовні оператори, цикли, функції тощо. Таким чином ви зможете навчатися та писати код державною мовою.
+Її синтаксис навмисно зроблено максимально простим і лаконічним, без зайвих складнощів. Мета Based - повернутись до витоків програмування, та згадати як це програмувати без фреймворків та бібліотек, використовуючи тільки стандартні конструкції умовних операторів, циклів та простеньких функцій.
 
-Для створення Based було взято за основу мову програмування Python та інші відкриті матеріали, які можна знайти [тут](https://github.com/davidcallanan/py-myopl-code).
+**_Через свою базовість та данину минулому, код на Based традиційно пишеться в стилі UPPERCASE._**
 
-***Оскільки мова є абсолютно базованою, то логічно, що код має писатися у базованому стилі PascalCase.***
-
-***Швидкий перехід між розділами:***
+**_Швидкий перехід між розділами:_**
 
 - [Based](#based)
 - [Мова програмування Based :ukraine:](#мова-програмування-based-ukraine)
@@ -40,7 +38,7 @@ Based repository has [Ukrainian :ukraine:](#мова-програмування-
   - [A custom IDE for Based](#a-custom-ide-for-based)
   - [Extensions for VS code](#extensions-for-vs-code)
 
-___
+---
 
 ## Мова програмування Based
 
@@ -48,59 +46,59 @@ ___
 
 Щоб запустити інтерпретатор Based, вам необхідно буде виконати один з наступних варіантів:
 
-___1. Скомпілювати інтерпретатор___ (це дасть вам більше можливостей у майбутньому)
+**_1. Скомпілювати інтерпретатор_** (це дасть вам більше можливостей у майбутньому)
 
-___2. Запустити інтерпретатор без компіляції___ (це також підійде, якщо ви просто хочете спробувати мову Based і не хочете встановлювати або компілювати файли)
+**_2. Запустити інтерпретатор без компіляції_** (це також підійде, якщо ви просто хочете спробувати мову Based і не хочете встановлювати або компілювати файли)
 
-***1. Компіляція інтерпретатора***
+**_1. Компіляція інтерпретатора_**
 
 Компілювання інтерпретатора необхідно для отримання виконуваного файлу based. Для цього виконайте наступні кроки:
 
 1. Клонуйте репозиторій з GitHub:
 
-``` bash
+```bash
 git clone https://github.com/NikitaBerezhnyj/Based.git
 ```
 
 2. Перейдіть в теку з проектом:
 
-``` bash
+```bash
 cd Based/'Programming Language'/src
 ```
 
 3. Встановіть пакет pyinstaller:
 
-``` bash
+```bash
 pip install pyinstaller
 ```
 
 4. Запустіть компіляцію:
 
-``` bash
+```bash
 pyinstaller -F -n based shell.py
 ```
 
 Після завершення компіляції в теці з проектом буде створений виконуваний файл based. Після ініціалізації цей файл можна буде використовувати для запуску програм мовою Based з будь-якої теки.
 
-***2. Запустити інтерпретатор без компіляції***
+**_2. Запустити інтерпретатор без компіляції_**
 
 Щоб запустити інтерпретатор без компіляції, виконайте наступну команду в теці з проектом:
 
 1. Клонуйте репозиторій з GitHub:
 
-``` bash
+```bash
 git clone https://github.com/NikitaBerezhnyj/Based.git
 ```
 
 2. Перейдіть в теку з проектом:
 
-``` bash
+```bash
 cd Based/'Programming Language'/src
 ```
 
 3. Запуск інтерпретатора
 
-``` bash
+```bash
 python shell.py
 ```
 
@@ -109,21 +107,22 @@ python shell.py
 #### Ініціалізація
 
 Ініціалізація інтерпретатора Based необхідна для того, щоб можна було використовувати його з будь-якої теки на вашому комп'ютері. Для цього виконайте наступні дії:
+
 1. Відкрийте скомпільований файл інтерпретатора
 
-``` bash
+```bash
 ./based
 ```
 
 2. Використайте наступну команду:
-   
-``` python
+
+```python
 ініціалізація
 ```
 
 3. Завершіть роботу інтерпретатора:
 
-``` python
+```python
 вихід
 ```
 
@@ -135,19 +134,19 @@ python shell.py
 
 1. Відкрийте інтерпретатор
 
-``` bash
+```bash
 based
 ```
 
 2. Використайте наступну команду:
-   
-``` python
+
+```python
 деініціалізація
 ```
 
 3. Завершіть роботу інтерпретатора:
 
-``` python
+```python
 вихід
 ```
 
@@ -157,15 +156,15 @@ based
 
 Я намагався зробити синтаксис Based простим і зрозумілим для початківців, але при цьому потужним і гнучким для досвідчених розробників. Тож перейдімо до роботи з мовою.
 
-***Створення коментарів***
+**_Створення коментарів_**
 
-``` python
+```python
 # Це коментар, його інтерпретатор не бачить
 ```
 
-***Вивід тексту на екран***
+**_Вивід тексту на екран_**
 
-``` python
+```python
 # Вивід звичайного тексту
 друк("Привіт, Світ!")
 
@@ -174,9 +173,9 @@ based
 друк(А)
 ```
 
-***Оголошення змінних***
+**_Оголошення змінних_**
 
-``` python
+```python
 # Цілочисельна змінна
 змінна А = 10
 
@@ -191,9 +190,9 @@ based
 
 ```
 
-***Ввід користувача***
+**_Ввід користувача_**
 
-``` python
+```python
 # Записується рядок
 змінна А = ввід()
 
@@ -201,9 +200,9 @@ based
 змінна Б = ввід_числа()
 ```
 
-***Оголошення масивів***
+**_Оголошення масивів_**
 
-``` python
+```python
 # Оголошення масиву цілих чисел
 змінна А = [0, 1]
 
@@ -218,38 +217,38 @@ based
 
 ```
 
-***Умови if (якщо), else if (інакше_якщо) та else (інакше)***
+***Умови if (якщо), else if (інакше*якщо) та else (інакше)\_**
 
-``` python
+```python
 # Умова якщо запис в один рядок
-якщо А < 5 тоді; друк("А < 5") 
+якщо А < 5 тоді; друк("А < 5")
 
 # Умова якщо повний запис
 якщо А < 5 тоді
-    друк("А < 5") 
+    друк("А < 5")
 
 # Умова якщо-інакше запис в один рядок
 якщо А < 5 тоді; друк("А < 5")  інакше друк("А > 8")
 
 # Умова якщо-інакше повний запис
 якщо А < 5 тоді
-    друк("А < 5")  
+    друк("А < 5")
 інакше друк("А > 8")
 
 # Умова якщо-інакше_якщо-інакше запис в один рядок
-якщо А < 5 тоді; друк("А < 5") інакше_якщо А > 5 і А < 8 тоді; друк("А < 5 і А > 8") інакше друк("А > 8")
+якщо А < 5 тоді; друк("А < 5") інакше_якщо А > 5 також А < 8 тоді; друк("А < 5 і А > 8") інакше друк("А > 8")
 
 # Умова якщо-інакше_якщо-інакше повний запис
-якщо А < 5 тоді 
-    друк("А < 5") 
-інакше_якщо А > 5 і А < 8 тоді 
-    друк("А < 5 і А > 8") 
+якщо А < 5 тоді
+    друк("А < 5")
+інакше_якщо А > 5 також А < 8 тоді
+    друк("А < 5 і А > 8")
 інакше друк("А > 8")
 ```
 
-***Оголошення циклу while (поки)***
+**_Оголошення циклу while (поки)_**
 
-``` python
+```python
 # Приклад циклу while (поки) у варіанті для одного рядка
 змінна Лічильник = 0
 поки Лічильник < 10 тоді змінна Лічильник = Лічильник + 1; друк(Лічильник)
@@ -262,21 +261,21 @@ based
 кінець
 ```
 
-***Оголошення циклу for (для_кожного)***
+**_Оголошення циклу for (для)_**
 
-``` python
-# Приклад циклу for (для_кожного) у варіанті для одного рядка
-для_кожного Лічильника = 0 до 10 тоді друк(л)
+```python
+# Приклад циклу for (для) у варіанті для одного рядка
+для Лічильника = 0 до 10 тоді друк(л)
 
-# Приклад циклу for (для_кожного) в розписаному варіанті
-для_кожного Лічильника = 0 до 10 тоді
+# Приклад циклу for (для) в розписаному варіанті
+для Лічильника = 0 до 10 тоді
     друк("Привіт, Світ!")
 кінець
 ```
 
-***Оголошення функції***
+**_Оголошення функції_**
 
-``` python
+```python
 # Найпростіші функції, що можна записати в один рядок записуються так:
 функція Привіт_світ() -> друк("Привіт, світ!")
 
@@ -284,19 +283,39 @@ based
 функція ПривітСвіт()
 	змінна Рази = ввід_числа()
 	друк(Рази)
-	для_кожного Лічильник = 0 до Рази тоді
+	для Лічильник = 0 до Рази тоді
 		друк("Привіт, Світ!")
 	кінець
 кінець
 ```
 
+**_Робота з сторонніми модулями_**
+
+*сторонній*файл.based\_
+
+```python
+функція СторонняФункція()
+    друк("Стороння функція працює")
+кінець
+```
+
+*виконавчий*файл.based\_
+
+```python
+отримати ("./сторонній_файл.based")
+
+СторонняФункція()
+```
+
+_***Примітка!*** Шлях до файлу, який ми імпортуємо, потрібно вказувати залежно від того, де знаходиться інтерпретатор. Тобто якщо ви ініціалізували інтерпретатор і запускаєте його в теці з основним файлом, то потрібно прописувати шлях імпорту відносно основного файлу. Але якщо ви інтерпретатор не ініціалізували, то доведеться писати шлях не від основного файлу, а від файлу shell.py._
+
 ### Приклади коду
 
-***Міні гра Вгадай Число, в якій користувач вгадує число, яке програма загадала. Кількість спроб встановлюється користувачем.***
+**_Міні гра Вгадай Число, в якій користувач вгадує число, яке програма загадала. Кількість спроб встановлюється користувачем._**
 
-``` python
+```python
 функція Гра(КількістьСпроб, ВиграшнеЧисло)
-    для_кожного спроба = 0 до КількістьСпроб тоді
+    для спроба = 0 до КількістьСпроб тоді
         друк("Введіть будь ласка число від 1 до 10:")
         змінна КористувацькеЧисло = ввід_числа()
         якщо КористувацькеЧисло < ВиграшнеЧисло тоді
@@ -318,7 +337,7 @@ based
 Гра(КількістьСпроб, 4)
 ```
 
-***Максимально простий, консольний калькулятор, який виконує арифметичні операції. Користувач обирає операцію, вводить числа, і отримує результат. Програма запитує користувача, чи бажає він продовжити обчислення.***
+**_Максимально простий, консольний калькулятор, який виконує арифметичні операції. Користувач обирає операцію, вводить числа, і отримує результат. Програма запитує користувача, чи бажає він продовжити обчислення._**
 
 ```python
 функція Калькулятор()
@@ -328,7 +347,7 @@ based
     змінна Дія = ввід_числа()
     друк("Введіть друге число: ")
     змінна Б = ввід_числа()
-    
+
     якщо Дія == 0 тоді
         змінна Результат = А + Б
     інакше_якщо Дія == 1 тоді
@@ -374,101 +393,90 @@ based
 
 ### Команди інтерпретатора
 
-- ***допомога*** - показує всі доступні команди для терміналу інтерпретатора та базовий синтаксис мови
+- **_допомога_** - показує всі доступні команди для терміналу інтерпретатора та базовий синтаксис мови
 
-- ***запуск*** - запускає файл .based (приклад використання: ***запуск("приклад.based")***)
+- **_запуск_** - запускає файл .based (приклад використання: **_запуск("приклад.based")_**)
 
-- ***цт*** - ця тека. Показує шлях до поточної теки
+- **_цт_** - ця тека. Показує шлях до поточної теки
 
-- ***лф*** - лист файлів. Показує вміст поточної теки
+- **_лф_** - лист файлів. Показує вміст поточної теки
 
-- ***зт*** - змінити теку. Змінює поточну теку
+- **_зт_** - змінити теку. Змінює поточну теку
 
-- ***сф*** - створити файл. Створює файл у поточній теці (приклад використання: ***сф приклад.txt***, якщо розширення не вказане, то воно буде за замовчуванням встановлене, як .based)
+- **_сф_** - створити файл. Створює файл у поточній теці (приклад використання: **_сф приклад.txt_**, якщо розширення не вказане, то воно буде за замовчуванням встановлене, як .based)
 
-- ***ст*** - створити теку. Створює теку у поточній (приклад використання: ***ст тестова_тека***)
+- **_ст_** - створити теку. Створює теку у поточній (приклад використання: ***ст тестова*тека\_**)
 
-- ***очистити*** - очищує термінал інтерпретатора
+- **_очистити_** - очищує термінал інтерпретатора
 
-- ***вихід*** - закриває інтерпретатор
+- **_вихід_** - закриває інтерпретатор
 
-- ***версія*** - показує поточну версію Based, що встановлена на вашому ПК
+- **_версія_** - показує поточну версію Based, що встановлена на вашому ПК
 
-- ***БАЗА*** - виводить основну інформацію про стан Based
+- **_БАЗА_** - виводить основну інформацію про стан Based
 
-___
+---
 
-***[Дивитись код мови](./Programming%20Language/)***
+**_[Дивитись код мови](./Programming%20Language/)_**
 
 ## Власне IDE для Based
 
-Поки що не готове
+**_NUB IDE_** - це інтегроване середовище розробки для мов програмування [NikLang](https://github.com/NikitaBerezhnyj/NikLang), [Udav](https://github.com/NikitaBerezhnyj/Udav) та [Based](https://github.com/NikitaBerezhnyj/Based). Воно надає зручний і функціональний інтерфейс для написання коду цими мовами.
 
-___
+Особливості:
 
-***[Дивитись код IDE](./Based%20IDE/)***
+- Підсвічування синтаксису для мов NikLang, Udav та Based
+- Автоматичне доповнення коду
+- Вбудований термінал з власними командами для керування IDE
+- Інтуїтивний графічний інтерфейс на основі Tauri + React
+
+**_NUB IDE_** створено з метою максимально спростити та прискорити розробку на мовах NikLang, Udav та Based. Воно поєднує сучасний дизайн, зручність використання та всі необхідні для продуктивної роботи інструменти.
+
+Завантажити та дізнатися більше про NUB IDE ви можете за посиланням нижче
+
+---
+
+**_[Дивитись код IDE](<[./Based%20IDE/](https://github.com/NikitaBerezhnyj/NUB_IDE)>)_**
 
 ## Розширення для VS code
 
 Розширення додає підтримку мови програмування Based у VS Code.
 
-***Функціональність***
+**_Функціональність_**
 
 - Підсвічування синтаксису для файлів .based
 - Автодоповнення ключових слів мови Based
 
-***Використання***
+**_Використання_**
 
 Після встановлення розширення, VS Code автоматично розпізнаватиме файли .based і застосовуватиме до них підсвічування і автодоповнення.
 
-***Установка***
+**_Установка_**
 
 На даний момент розширення не доступне в маркетплейсі VS Code, тож його можна встановити тільки клонувавши репозиторій та встановивши його локально. Для цього вам необхідно буде виконати наступні кроки:
 
 1. Копіювати репозиторій на свій ПК через термінал
+
 ```bash
 git clone https://github.com/NikitaBerezhnyj/Based.git
 ```
 
 2. Потім знайти теку VS code на вашому ПК
-   
 3. Скопіювати теку based-extension до теки з іншими розширеннями
 
-***Підтримувані мови:*** Based (.based)
+**_Підтримувані мови:_** Based (.based)
 
-***Залежності:*** Не має
+**_Залежності:_** Не має
 
-***Версія:*** 1.0.0
-___
+**_Версія:_** 1.0.0
 
-***[Дивитись код розширення](./VS%20Code%20Extintion/based-extantion/)***
+---
 
-___
+**_[Дивитись код розширення](./VS%20Code%20Extintion/based-extantion/)_**
 
-
-
-
-
-
-
-
-
-
-
+---
 
 <!-- _________________________________________________________________ -->
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Programming language Based :uk:
 
@@ -476,15 +484,13 @@ ___
   <img src='./VS Code Extintion/based-extantion/icon-based.png' alt='Based icon' style="width:50%">
 </p>
 
-The ***Based*** programming language is a basic open source programming language created in Ukraine with the aim of writing even more basic code.
+**_Programming language Based_** is a simple and uncomplicated open source programming language created by modifying the code of another educational project called [py-myopl-code] (https://github.com/davidcallanan/py-myopl-code).
 
-The main goal of Based is to increase the amount of code in the Ukrainian language. It has all the necessary basic constructs, such as conditional statements, loops, functions, etc. This way, you can learn and write code in the national language.
+Its syntax is deliberately made as simple and concise as possible, without unnecessary complexity. The goal of Based is to return to the roots of programming and to remember how to program without frameworks and libraries, using only standard constructs of conditional statements, loops, and simple functions.
 
-To create Based, we used the Python programming language and other open source materials that can be found [here] (https://github.com/davidcallanan/py-myopl-code).
+**_Due to its basic nature and tribute to the past, code in Based is traditionally written in the PascalCase style._**
 
-***Since the language is absolutely basic, it is logical that the code should be written in the basic PascalCase style.
-
-***Quick transition between sections:***
+**_Quick transition between sections:_**
 
 - [Based](#based)
 - [Мова програмування Based :ukraine:](#мова-програмування-based-ukraine)
@@ -508,7 +514,7 @@ To create Based, we used the Python programming language and other open source m
   - [A custom IDE for Based](#a-custom-ide-for-based)
   - [Extensions for VS code](#extensions-for-vs-code)
 
-___
+---
 
 ## Programming language Based
 
@@ -516,59 +522,59 @@ ___
 
 To start the Based interpreter, you will need to do one of the following:
 
-___1. Compile the interpreter___ (this will give you more options in the future)
+**_1. Compile the interpreter_** (this will give you more options in the future)
 
-___2. Run the interpreter without compiling___ (this is also suitable if you just want to try the Based language and do not want to install or compile files)
+**_2. Run the interpreter without compiling_** (this is also suitable if you just want to try the Based language and do not want to install or compile files)
 
-***1. Compile the interpreter***.
+**_1. Compile the interpreter_**.
 
 Compiling the interpreter is necessary to get the based executable. To do this, follow these steps:
 
 1. Clone the repository from GitHub:
 
-``` bash
+```bash
 git clone https://github.com/NikitaBerezhnyj/Based.git
 ```
 
 2. Change to the project folder:
 
-``` bash
+```bash
 cd Based/'Programming Language'/src
 ```
 
 3. Install the package pyinstaller:
 
-``` bash
+```bash
 pip install pyinstaller
 ```
 
 4. Run the compilation:
 
-``` bash
+```bash
 pyinstaller -F -n based shell.py
 ```
 
 After compilation is complete, the based executable file will be created in the project folder. After initialization, this file can be used to run programs in the Based language from any folder.
 
-***2. Run the interpreter without compilation***
+**_2. Run the interpreter without compilation_**
 
 To run the interpreter without compiling, run the following command in the project folder:
 
 1. Clone the repository from GitHub:
 
-``` bash
+```bash
 git clone https://github.com/NikitaBerezhnyj/Based.git
 ```
 
 2. Change to the project folder:
 
-``` bash
+```bash
 cd Based/'Programming Language'/src
 ```
 
 3. Run the interpreter
 
-``` bash
+```bash
 python shell.py
 ```
 
@@ -586,13 +592,13 @@ Initializing the Based interpreter is necessary to be able to use it from any fo
 
 2. Use the following command:
 
-``` python
+```python
 ініціалізація
 ```
 
 3. Shut down the interpreter:
 
-``` python
+```python
 вихід
 ```
 
@@ -610,13 +616,13 @@ based
 
 2. Use the following command:
 
-``` python
+```python
 деініціалізація
 ```
 
 3. Shut down the interpreter:
 
-``` python
+```python
 вихід
 ```
 
@@ -626,15 +632,15 @@ This will remove Based from the utilities folder, but leave it in the project fo
 
 I've tried to make the Based syntax simple and easy to understand for beginners, but powerful and flexible for advanced developers. So let's get down to business with the language.
 
-***Creating comments***
+**_Creating comments_**
 
-``` python
+```python
 # This is a comment, the interpreter does not see it
 ```
 
-***Display text on the screen***
+**_Display text on the screen_**
 
-``` python
+```python
 # Plain text output
 друк("Привіт, Світ!")
 
@@ -643,9 +649,9 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 друк(А)
 ```
 
-***Declaration of variables***
+**_Declaration of variables_**
 
-``` python
+```python
 # Integer variable
 змінна А = 10
 
@@ -660,9 +666,9 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 
 ```
 
-***User input***
+**_User input_**
 
-``` python
+```python
 # The string is written
 змінна А = ввід()
 
@@ -670,9 +676,9 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 змінна Б = ввід_числа()
 ```
 
-***Оголошення масивів***
+**_Оголошення масивів_**
 
-``` python
+```python
 # Declaring an array of integers
 змінна А = [0, 1]
 
@@ -687,38 +693,38 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 
 ```
 
-***If, else if, and else conditions***
+**_If, else if, and else conditions_**
 
-``` python
+```python
 # Condition if the record is in one line
-якщо А < 5 тоді; друк("А < 5") 
+якщо А < 5 тоді; друк("А < 5")
 
 # Condition if full record
 якщо А < 5 тоді
-    друк("А < 5") 
+    друк("А < 5")
 
 # If-else condition record in one line
 якщо А < 5 тоді; друк("А < 5")  інакше друк("А > 8")
 
 # If-else condition full record
 якщо А < 5 тоді
-    друк("А < 5")  
+    друк("А < 5")
 інакше друк("А > 8")
 
 # If-else_if-else record in one line
-якщо А < 5 тоді; друк("А < 5") інакше_якщо А > 5 і А < 8 тоді; друк("А < 5 і А > 8") інакше друк("А > 8")
+якщо А < 5 тоді; друк("А < 5") інакше_якщо А > 5 також А < 8 тоді; друк("А < 5 і А > 8") інакше друк("А > 8")
 
 # Condition if_elif_else full record
-якщо А < 5 тоді 
-    друк("А < 5") 
-інакше_якщо А > 5 і А < 8 тоді 
-    друк("А < 5 і А > 8") 
+якщо А < 5 тоді
+    друк("А < 5")
+інакше_якщо А > 5 також А < 8 тоді
+    друк("А < 5 і А > 8")
 інакше друк("А > 8")
 ```
 
-***Declaring a while loop***
+**_Declaring a while loop_**
 
-``` python
+```python
 # An example of a while loop in a single-line version
 змінна Лічильник = 0
 поки Лічильник < 10 тоді змінна Лічильник = Лічильник + 1; друк(Лічильник)
@@ -731,21 +737,21 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 кінець
 ```
 
-***Declaring a for loop**
+**\*Declaring a for loop**
 
-``` python
+```python
 # An example of a for loop in the version for one line
-для_кожного Лічильника = 0 до 10 тоді друк(л)
+для Лічильника = 0 до 10 тоді друк(л)
 
 # An example of a for loop in the painted version
-для_кожного Лічильника = 0 до 10 тоді
+для Лічильника = 0 до 10 тоді
     друк("Привіт, Світ!")
 кінець
 ```
 
-***Declaring a function***
+**_Declaring a function_**
 
-``` python
+```python
 # The simplest functions that can be written in one line are written like this:
 функція Привіт_світ() -> друк("Привіт, світ!")
 
@@ -753,7 +759,7 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 функція ПривітСвіт()
 	змінна Рази = ввід_числа()
 	друк(Рази)
-	для_кожного Лічильник = 0 до Рази тоді
+	для Лічильник = 0 до Рази тоді
 		друк("Привіт, Світ!")
 	кінець
 кінець
@@ -761,11 +767,11 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 
 ### Code examples
 
-***Guess the Number mini-game in which the user guesses the number that the program has guessed. The number of attempts is set by the user.***
+**_Guess the Number mini-game in which the user guesses the number that the program has guessed. The number of attempts is set by the user._**
 
-``` python
+```python
 функція Гра(КількістьСпроб, ВиграшнеЧисло)
-    для_кожного спроба = 0 до КількістьСпроб тоді
+    для спроба = 0 до КількістьСпроб тоді
         друк("Введіть будь ласка число від 1 до 10:")
         змінна КористувацькеЧисло = ввід_числа()
         якщо КористувацькеЧисло < ВиграшнеЧисло тоді
@@ -787,7 +793,7 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 Гра(КількістьСпроб, 4)
 ```
 
-***The simplest possible console calculator that performs arithmetic operations. The user selects an operation, enters numbers, and gets the result. The program asks the user if he or she wants to continue the calculation.***
+**_The simplest possible console calculator that performs arithmetic operations. The user selects an operation, enters numbers, and gets the result. The program asks the user if he or she wants to continue the calculation._**
 
 ```python
 функція Калькулятор()
@@ -797,7 +803,7 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
     змінна Дія = ввід_числа()
     друк("Введіть друге число: ")
     змінна Б = ввід_числа()
-    
+
     якщо Дія == 0 тоді
         змінна Результат = А + Б
     інакше_якщо Дія == 1 тоді
@@ -843,54 +849,74 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 
 ### Interpreter commands
 
-- ***допомога*** - shows all available commands for the interpreter terminal and the basic syntax of the language
+- **_допомога_** - shows all available commands for the interpreter terminal and the basic syntax of the language
 
-- ***запуск*** - runs the .based file (example of use: ***запуск("приклад.based")***)
+- **_запуск_** - runs the .based file (example of use: **_запуск("приклад.based")_**)
 
-- ***цт*** - this folder. Shows the path to the current folder
+- **_цт_** - this folder. Shows the path to the current folder
 
-- ***лф*** - a list of files. Shows the contents of the current folder
+- **_лф_** - a list of files. Shows the contents of the current folder
 
-- ***зт*** - change folder. Changes the current folder
+- **_зт_** - change folder. Changes the current folder
 
-- ***сф*** - create file. Creates a file in the current folder (example of use: ***сф приклад.txt***, if the extension is not specified, it will be set to .based by default)
+- **_сф_** - create file. Creates a file in the current folder (example of use: **_сф приклад.txt_**, if the extension is not specified, it will be set to .based by default)
 
-- ***ст*** - create folder. Creates a folder in the current one (example of use: ***ст тестова_тека***)
+- **_ст_** - create folder. Creates a folder in the current one (example of use: ***ст тестова*тека\_**)
 
-- ***очистити*** - clears the interpreter terminal
+- **_очистити_** - clears the interpreter terminal
 
-- ***вихід*** - closes the interpreter
+- **_вихід_** - closes the interpreter
 
-- ***версія*** - shows the current version of Based installed on your PC
+- **_версія_** - shows the current version of Based installed on your PC
 
-- ***БАЗА*** - displays basic information about the state of the Based
+- **_БАЗА_** - displays basic information about the state of the Based
 
-___
+---
 
-***[Дивитись код мови](./Programming%20Language/)***
+**_[See the language code](./Programming%20Language/)_**
 
 ## A custom IDE for Based
 
-Not ready yet
+NUB IDE is a modern integrated development environment for the programming languages [NikLang](https://github.com/NikitaBerezhnyj/NikLang), [Udav](https://github.com/NikitaBerezhnyj/Udav) and [Based](https://github.com/NikitaBerezhnyj/Based). It provides a user-friendly and functional interface for writing and debugging code.
 
-___
+Features:
 
-***[See the IDE code](./Based%20IDE/)***
+- Syntax highlighting for Based, Udav, and NikLang languages
+
+- Automatic code completion
+
+- Built-in terminal with custom commands to control the IDE
+
+- Supports cross-platform application development (Windows, Linux, MacOS)
+
+- Quick and convenient project search
+
+- Real-time code editing and debugging
+
+- Intuitive graphical interface based on React
+
+NUB IDE was created to simplify and speed up development in Based, Udav, and NikLang as much as possible. It combines modern design, ease of use, and all the tools you need to be productive.
+
+You can download and learn more about NUB IDE [here](https://github.com/NikitaBerezhnyj/NUB_IDE)
+
+---
+
+**_[See the IDE code](./Based%20IDE/)_**
 
 ## Extensions for VS code
 
 The extension adds support for the Based programming language to VS Code.
 
-***Features***.
+**_Features_**.
 
 - Syntax highlighting for .based files
 - Auto-completion of Based language keywords
 
-***Usage***.
+**_Usage_**.
 
 After installing the extension, VS Code will automatically recognize .based files and apply syntax highlighting and auto-completion to them.
 
-***Installation***
+**_Installation_**
 
 At the moment, the extension is not available in the VS Code marketplace, so you can install it only by cloning the repository and installing it locally. To do this, you will need to follow these steps:
 
@@ -904,11 +930,12 @@ git clone https://github.com/NikitaBerezhnyj/Based.git
 
 3. Copy the based-extension folder to the folder with the other extensions
 
-***Supported languages:*** Based (.based)
+**_Supported languages:_** Based (.based)
 
-***Dependencies:*** None
+**_Dependencies:_** None
 
-***Version:*** 1.0.0
-___
+**_Version:_** 1.0.0
 
-***[See the extension code](./VS%20Code%20Extintion/based-extantion/)***
+---
+
+**_[See the extension code](./VS%20Code%20Extintion/based-extantion/)_**

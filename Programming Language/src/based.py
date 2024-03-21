@@ -3,7 +3,6 @@
 #######################################
 
 from strings_with_arrows import *
-
 import string
 import os
 import math
@@ -37,7 +36,7 @@ class Error:
 
 class IllegalCharError(Error):
   def __init__(self, pos_start, pos_end, details):
-    super().__init__(pos_start, pos_end, 'Не базований символ', details)
+    super().__init__(pos_start, pos_end, 'Недопустимий символ', details)
 
 class ExpectedCharError(Error):
   def __init__(self, pos_start, pos_end, details):
@@ -45,11 +44,11 @@ class ExpectedCharError(Error):
 
 class InvalidSyntaxError(Error):
   def __init__(self, pos_start, pos_end, details=''):
-    super().__init__(pos_start, pos_end, 'Не базований синтаксис', details)
+    super().__init__(pos_start, pos_end, 'Невірний синтаксис', details)
 
 class RTError(Error):
   def __init__(self, pos_start, pos_end, details, context):
-    super().__init__(pos_start, pos_end, 'Застрягло на блокпосту', details)
+    super().__init__(pos_start, pos_end, 'Помилка під час виконання', details)
     self.context = context
 
   def as_string(self):
@@ -64,11 +63,11 @@ class RTError(Error):
     ctx = self.context
 
     while ctx:
-      result = f'  Файл {pos.fn}, рядок {str(pos.ln + 1)}, в {ctx.display_name}\n' + result
+      result = f'  Файл {pos.fn}, рядок {str(pos.ln + 1)}, у {ctx.display_name}\n' + result
       pos = ctx.parent_entry_pos
       ctx = ctx.parent
 
-    return 'База виклику (останній виклик - останній):\n' + result
+    return 'Відстеження викликів (найновіший виклик останній):\n' + result
 
 #######################################
 # POSITION
@@ -126,23 +125,23 @@ TT_NEWLINE		= 'NEWLINE'
 TT_EOF				= 'EOF'
 
 KEYWORDS = [
-  'змінна',
-  'і',
-  'або',
-  'не',
-  'якщо',
-  'інакше_якщо',
-  'інакше',
-  'для_кожного',
-  'до',
-  'крок',
-  'поки',
-  'функція',
-  'тоді',
-  'кінець',
-  'повернути',
-  'продовжити',
-  'зупинити',
+  'ЗМІННА',
+  'ТАКОЖ',
+  'АБО',
+  'НЕ',
+  'ЯКЩО',
+  'ІНАКШЕ_ЯКЩО',
+  'ІНАКШЕ',
+  'ДЛЯ',
+  'ДО',
+  'КРОК',
+  'ПОКИ',
+  'ФУНКЦІЯ',
+  'ТОДІ',
+  'КІНЕЦЬ',
+  'ПОВЕРНУТИ',
+  'ПРОДОВЖИТИ',
+  'ЗУПИНИТИ',
 ]
 
 class Token:
@@ -319,7 +318,7 @@ class Lexer:
       return Token(TT_NE, pos_start=pos_start, pos_end=self.pos), None
 
     self.advance()
-    return None, ExpectedCharError(pos_start, self.pos, "'=' (after '!')")
+    return None, ExpectedCharError(pos_start, self.pos, "'=' (після '!')")
   
   def make_equals(self):
     tok_type = TT_EQ
@@ -571,7 +570,7 @@ class Parser:
     if not res.error and self.current_tok.type != TT_EOF:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        "Token cannot appear after previous tokens"
+        "Токен не може з'являтися після попередніх токенів"
       ))
     return res
 
@@ -619,7 +618,7 @@ class Parser:
     res = ParseResult()
     pos_start = self.current_tok.pos_start.copy()
 
-    if self.current_tok.matches(TT_KEYWORD, 'повернути'):
+    if self.current_tok.matches(TT_KEYWORD, 'ПОВЕРНУТИ'):
       res.register_advancement()
       self.advance()
 
@@ -628,12 +627,12 @@ class Parser:
         self.reverse(res.to_reverse_count)
       return res.success(ReturnNode(expr, pos_start, self.current_tok.pos_start.copy()))
     
-    if self.current_tok.matches(TT_KEYWORD, 'продовжувати'):
+    if self.current_tok.matches(TT_KEYWORD, 'ПРОДОВЖУВАТИ'):
       res.register_advancement()
       self.advance()
       return res.success(ContinueNode(pos_start, self.current_tok.pos_start.copy()))
       
-    if self.current_tok.matches(TT_KEYWORD, 'зупинити'):
+    if self.current_tok.matches(TT_KEYWORD, 'ЗУПИНИТИ'):
       res.register_advancement()
       self.advance()
       return res.success(BreakNode(pos_start, self.current_tok.pos_start.copy()))
@@ -642,21 +641,21 @@ class Parser:
     if res.error:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        "Expected 'повернути', 'продовжувати', 'зупинити', 'змінна', 'якщо', 'для_кожного', 'поки', 'функція', ціле, дійсне identifier, '+', '-', '(', '[' or 'не'"
+        "Очікується 'ПОВЕРНУТИ', 'ПРОДОВЖУВАТИ', 'ЗУПИНИТИ', 'ЗМІННА', 'ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ', ЦІЛЕ, ДІЙСНЕ ідентифікатор, '+', '-', '(', '[' або 'НЕ'"
       ))
     return res.success(expr)
 
   def expr(self):
     res = ParseResult()
 
-    if self.current_tok.matches(TT_KEYWORD, 'змінна'):
+    if self.current_tok.matches(TT_KEYWORD, 'ЗМІННА'):
       res.register_advancement()
       self.advance()
 
       if self.current_tok.type != TT_IDENTIFIER:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          "Expected identifier"
+          "Очікується ідентифікатор"
         ))
 
       var_name = self.current_tok
@@ -666,7 +665,7 @@ class Parser:
       if self.current_tok.type != TT_EQ:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          "Expected '='"
+          "Очікується '='"
         ))
 
       res.register_advancement()
@@ -675,12 +674,12 @@ class Parser:
       if res.error: return res
       return res.success(VarAssignNode(var_name, expr))
 
-    node = res.register(self.bin_op(self.comp_expr, ((TT_KEYWORD, 'і'), (TT_KEYWORD, 'або'))))
+    node = res.register(self.bin_op(self.comp_expr, ((TT_KEYWORD, 'ТАКОЖ'), (TT_KEYWORD, 'АБО'))))
 
     if res.error:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        "Expected 'змінна', 'якщо', 'для_кожного', 'поки', 'функція', ціле, дійсне, identifier, '+', '-', '(', '[' or 'не'"
+        "Очікується 'ЗМІННА', 'ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ', ЦІЛЕ, ДІЙСНЕ, ідентифікатор, '+', '-', '(', '[' або 'НЕ'"
       ))
 
     return res.success(node)
@@ -688,7 +687,7 @@ class Parser:
   def comp_expr(self):
     res = ParseResult()
 
-    if self.current_tok.matches(TT_KEYWORD, 'не'):
+    if self.current_tok.matches(TT_KEYWORD, 'НЕ'):
       op_tok = self.current_tok
       res.register_advancement()
       self.advance()
@@ -702,7 +701,7 @@ class Parser:
     if res.error:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        "Expected ціле, дійсне, identifier, '+', '-', '(', '[', 'якщо', 'для_кожного', 'поки', 'функція' or 'не'"
+        "Очікується ЦІЛЕ, ДІЙСНЕ, ідентифікатор, '+', '-', '(', '[', 'ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ' або 'НЕ'"
       ))
 
     return res.success(node)
@@ -747,7 +746,7 @@ class Parser:
         if res.error:
           return res.failure(InvalidSyntaxError(
             self.current_tok.pos_start, self.current_tok.pos_end,
-            "Expected ')', 'змінна', 'якщо', 'для_кожного', 'поки', 'функція', ціле, дійсне identifier, '+', '-', '(', '[' or 'не'"
+            "Очікується ')', 'ЗМІННА', 'ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ', ЦІЛЕ, ДІЙСНЕ ідентифікатор, '+', '-', '(', '[' або 'НЕ'"
           ))
 
         while self.current_tok.type == TT_COMMA:
@@ -760,7 +759,7 @@ class Parser:
         if self.current_tok.type != TT_RPAREN:
           return res.failure(InvalidSyntaxError(
             self.current_tok.pos_start, self.current_tok.pos_end,
-            f"Expected ',' or ')'"
+            f"Очікується ',' або ')'"
           ))
 
         res.register_advancement()
@@ -799,7 +798,7 @@ class Parser:
       else:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          "Expected ')'"
+          "Очікується ')'"
         ))
 
     elif tok.type == TT_LSQUARE:
@@ -807,29 +806,29 @@ class Parser:
       if res.error: return res
       return res.success(list_expr)
     
-    elif tok.matches(TT_KEYWORD, 'якщо'):
+    elif tok.matches(TT_KEYWORD, 'ЯКЩО'):
       if_expr = res.register(self.if_expr())
       if res.error: return res
       return res.success(if_expr)
 
-    elif tok.matches(TT_KEYWORD, 'для_кожного'):
+    elif tok.matches(TT_KEYWORD, 'ДЛЯ'):
       for_expr = res.register(self.for_expr())
       if res.error: return res
       return res.success(for_expr)
 
-    elif tok.matches(TT_KEYWORD, 'поки'):
+    elif tok.matches(TT_KEYWORD, 'ПОКИ'):
       while_expr = res.register(self.while_expr())
       if res.error: return res
       return res.success(while_expr)
 
-    elif tok.matches(TT_KEYWORD, 'функція'):
+    elif tok.matches(TT_KEYWORD, 'ФУНКЦІЯ'):
       func_def = res.register(self.func_def())
       if res.error: return res
       return res.success(func_def)
 
     return res.failure(InvalidSyntaxError(
       tok.pos_start, tok.pos_end,
-      "Expected ціле, дійсне identifier, '+', '-', '(', '[', якщо', 'для_кожного', 'поки', 'функція'"
+      "Очікується ЦІЛЕ, ДІЙСНЕ ідентифікатор, '+', '-', '(', '[', ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ'"
     ))
 
   def list_expr(self):
@@ -840,7 +839,7 @@ class Parser:
     if self.current_tok.type != TT_LSQUARE:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected '['"
+        f"Очікується '['"
       ))
 
     res.register_advancement()
@@ -854,7 +853,7 @@ class Parser:
       if res.error:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          "Expected ']', 'змінна', 'якщо', 'для_кожного', 'поки', 'функція', ціле, дійсне identifier, '+', '-', '(', '[' or 'не'"
+          "Очікується ']', 'ЗМІННА', 'ЯКЩО', 'ДЛЯ', 'ПОКИ', 'ФУНКЦІЯ', ЦІЛЕ, ДІЙСНЕ ідентифікатор, '+', '-', '(', '[' або 'НЕ'"
         ))
 
       while self.current_tok.type == TT_COMMA:
@@ -867,7 +866,7 @@ class Parser:
       if self.current_tok.type != TT_RSQUARE:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected ',' or ']'"
+          f"Очікується ',' або ']'"
         ))
 
       res.register_advancement()
@@ -881,19 +880,19 @@ class Parser:
 
   def if_expr(self):
     res = ParseResult()
-    all_cases = res.register(self.if_expr_cases('якщо'))
+    all_cases = res.register(self.if_expr_cases('ЯКЩО'))
     if res.error: return res
     cases, else_case = all_cases
     return res.success(IfNode(cases, else_case))
 
   def if_expr_b(self):
-    return self.if_expr_cases('інакше_якщо')
+    return self.if_expr_cases('ІНАКШЕ_ЯКЩО')
     
   def if_expr_c(self):
     res = ParseResult()
     else_case = None
 
-    if self.current_tok.matches(TT_KEYWORD, 'інакше'):
+    if self.current_tok.matches(TT_KEYWORD, 'ІНАКШЕ'):
       res.register_advancement()
       self.advance()
 
@@ -905,13 +904,13 @@ class Parser:
         if res.error: return res
         else_case = (statements, True)
 
-        if self.current_tok.matches(TT_KEYWORD, 'кінець'):
+        if self.current_tok.matches(TT_KEYWORD, 'КІНЕЦЬ'):
           res.register_advancement()
           self.advance()
         else:
           return res.failure(InvalidSyntaxError(
             self.current_tok.pos_start, self.current_tok.pos_end,
-            "Expected 'кінець'"
+            "Очікується 'КІНЕЦЬ'"
           ))
       else:
         expr = res.register(self.statement())
@@ -924,7 +923,7 @@ class Parser:
     res = ParseResult()
     cases, else_case = [], None
 
-    if self.current_tok.matches(TT_KEYWORD, 'інакше_якщо'):
+    if self.current_tok.matches(TT_KEYWORD, 'ІНАКШЕ_ЯКЩО'):
       all_cases = res.register(self.if_expr_b())
       if res.error: return res
       cases, else_case = all_cases
@@ -942,7 +941,7 @@ class Parser:
     if not self.current_tok.matches(TT_KEYWORD, case_keyword):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected '{case_keyword}'"
+        f"Очікується '{case_keyword}'"
       ))
 
     res.register_advancement()
@@ -951,10 +950,10 @@ class Parser:
     condition = res.register(self.expr())
     if res.error: return res
 
-    if not self.current_tok.matches(TT_KEYWORD, 'тоді'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ТОДІ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'тоді'"
+        f"Очікується 'ТОДІ'"
       ))
 
     res.register_advancement()
@@ -968,7 +967,7 @@ class Parser:
       if res.error: return res
       cases.append((condition, statements, True))
 
-      if self.current_tok.matches(TT_KEYWORD, 'кінець'):
+      if self.current_tok.matches(TT_KEYWORD, 'КІНЕЦЬ'):
         res.register_advancement()
         self.advance()
       else:
@@ -991,10 +990,10 @@ class Parser:
   def for_expr(self):
     res = ParseResult()
 
-    if not self.current_tok.matches(TT_KEYWORD, 'для_кожного'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ДЛЯ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'для_кожного'"
+        f"Очікується 'ДЛЯ'"
       ))
 
     res.register_advancement()
@@ -1003,7 +1002,7 @@ class Parser:
     if self.current_tok.type != TT_IDENTIFIER:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected identifier"
+        f"Очікується ідентифікатор"
       ))
 
     var_name = self.current_tok
@@ -1013,7 +1012,7 @@ class Parser:
     if self.current_tok.type != TT_EQ:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected '='"
+        f"Очікується '='"
       ))
     
     res.register_advancement()
@@ -1022,10 +1021,10 @@ class Parser:
     start_value = res.register(self.expr())
     if res.error: return res
 
-    if not self.current_tok.matches(TT_KEYWORD, 'до'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ДО'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'до'"
+        f"Очікується 'ДО'"
       ))
     
     res.register_advancement()
@@ -1034,7 +1033,7 @@ class Parser:
     end_value = res.register(self.expr())
     if res.error: return res
 
-    if self.current_tok.matches(TT_KEYWORD, 'крок'):
+    if self.current_tok.matches(TT_KEYWORD, 'КРОК'):
       res.register_advancement()
       self.advance()
 
@@ -1043,10 +1042,10 @@ class Parser:
     else:
       step_value = None
 
-    if not self.current_tok.matches(TT_KEYWORD, 'тоді'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ТОДІ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'тоді'"
+        f"Очікується 'ТОДІ'"
       ))
 
     res.register_advancement()
@@ -1059,10 +1058,10 @@ class Parser:
       body = res.register(self.statements())
       if res.error: return res
 
-      if not self.current_tok.matches(TT_KEYWORD, 'кінець'):
+      if not self.current_tok.matches(TT_KEYWORD, 'КІНЕЦЬ'):
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected 'кінець'"
+          f"Очікується 'КІНЕЦЬ'"
         ))
 
       res.register_advancement()
@@ -1078,10 +1077,10 @@ class Parser:
   def while_expr(self):
     res = ParseResult()
 
-    if not self.current_tok.matches(TT_KEYWORD, 'поки'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ПОКИ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'поки'"
+        f"Очікується 'ПОКИ'"
       ))
 
     res.register_advancement()
@@ -1090,10 +1089,10 @@ class Parser:
     condition = res.register(self.expr())
     if res.error: return res
 
-    if not self.current_tok.matches(TT_KEYWORD, 'тоді'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ТОДІ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'тоді'"
+        f"Очікується 'ТОДІ'"
       ))
 
     res.register_advancement()
@@ -1106,10 +1105,10 @@ class Parser:
       body = res.register(self.statements())
       if res.error: return res
 
-      if not self.current_tok.matches(TT_KEYWORD, 'кінець'):
+      if not self.current_tok.matches(TT_KEYWORD, 'КІНЕЦЬ'):
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected 'кінець'"
+          f"Очікується 'КІНЕЦЬ'"
         ))
 
       res.register_advancement()
@@ -1125,10 +1124,10 @@ class Parser:
   def func_def(self):
     res = ParseResult()
 
-    if not self.current_tok.matches(TT_KEYWORD, 'функція'):
+    if not self.current_tok.matches(TT_KEYWORD, 'ФУНКЦІЯ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'функція'"
+        f"Очікується 'ФУНКЦІЯ'"
       ))
 
     res.register_advancement()
@@ -1141,14 +1140,14 @@ class Parser:
       if self.current_tok.type != TT_LPAREN:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected '('"
+          f"Очікується '('"
         ))
     else:
       var_name_tok = None
       if self.current_tok.type != TT_LPAREN:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected identifier or '('"
+          f"Очікується ідентифікатор або '('"
         ))
     
     res.register_advancement()
@@ -1167,7 +1166,7 @@ class Parser:
         if self.current_tok.type != TT_IDENTIFIER:
           return res.failure(InvalidSyntaxError(
             self.current_tok.pos_start, self.current_tok.pos_end,
-            f"Expected identifier"
+            f"Очікується ідентифікатор"
           ))
 
         arg_name_toks.append(self.current_tok)
@@ -1177,13 +1176,13 @@ class Parser:
       if self.current_tok.type != TT_RPAREN:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected ',' or ')'"
+          f"Очікується ',' або ')'"
         ))
     else:
       if self.current_tok.type != TT_RPAREN:
         return res.failure(InvalidSyntaxError(
           self.current_tok.pos_start, self.current_tok.pos_end,
-          f"Expected identifier or ')'"
+          f"Очікується ідентифікатор або ')'"
         ))
 
     res.register_advancement()
@@ -1206,7 +1205,7 @@ class Parser:
     if self.current_tok.type != TT_NEWLINE:
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected '->' or NEWLINE"
+        f"Очікується '->' або NEWLINE"
       ))
 
     res.register_advancement()
@@ -1215,10 +1214,10 @@ class Parser:
     body = res.register(self.statements())
     if res.error: return res
 
-    if not self.current_tok.matches(TT_KEYWORD, 'кінець'):
+    if not self.current_tok.matches(TT_KEYWORD, 'КІНЕЦЬ'):
       return res.failure(InvalidSyntaxError(
         self.current_tok.pos_start, self.current_tok.pos_end,
-        f"Expected 'кінець'"
+        f"Очікується 'КІНЕЦЬ'"
       ))
 
     res.register_advancement()
@@ -1371,7 +1370,7 @@ class Value:
     return RTResult().failure(self.illegal_operation())
 
   def copy(self):
-    raise Exception('No copy method defined')
+    raise Exception('Метод копіювання не визначено')
 
   def is_true(self):
     return False
@@ -1380,7 +1379,7 @@ class Value:
     if not other: other = self
     return RTError(
       self.pos_start, other.pos_end,
-      'Illegal operation',
+      'Невірний оператор',
       self.context
     )
 
@@ -1412,7 +1411,7 @@ class Number(Value):
       if other.value == 0:
         return None, RTError(
           other.pos_start, other.pos_end,
-          'Division by zero',
+          'Ділення на нуль',
           self.context
         )
 
@@ -1548,7 +1547,7 @@ class List(Value):
       except:
         return None, RTError(
           other.pos_start, other.pos_end,
-          'Element at this index could not be removed from list because index is out of bounds',
+          'Елемент за цим індексом не може бути видалений зі списку, оскільки індекс знаходиться поза його межами',
           self.context
         )
     else:
@@ -1569,7 +1568,7 @@ class List(Value):
       except:
         return None, RTError(
           other.pos_start, other.pos_end,
-          'Element at this index could not be retrieved from list because index is out of bounds',
+          'Елемент за цим індексом не може бути знайдений у списку, оскільки індекс знаходиться за межами допустимих значень',
           self.context
         )
     else:
@@ -1590,7 +1589,7 @@ class List(Value):
 class BaseFunction(Value):
   def __init__(self, name):
     super().__init__()
-    self.name = name or "<anonymous>"
+    self.name = name or "<анонімний>"
 
   def generate_new_context(self):
     new_context = Context(self.name, self.context, self.pos_start)
@@ -1603,14 +1602,14 @@ class BaseFunction(Value):
     if len(args) > len(arg_names):
       return res.failure(RTError(
         self.pos_start, self.pos_end,
-        f"{len(args) - len(arg_names)} too many args passed into {self}",
+        f"{len(args) - len(arg_names)} занадто багато аргументів передано в {self}",
         self.context
       ))
     
     if len(args) < len(arg_names):
       return res.failure(RTError(
         self.pos_start, self.pos_end,
-        f"{len(arg_names) - len(args)} too few args passed into {self}",
+        f"{len(arg_names) - len(args)} занадто мало аргументів передано в {self}",
         self.context
       ))
 
@@ -1658,7 +1657,7 @@ class Function(BaseFunction):
     return copy
 
   def __repr__(self):
-    return f"<function {self.name}>"
+    return f"<функція {self.name}>"
 
 class BuiltInFunction(BaseFunction):
   def __init__(self, name):
@@ -1679,7 +1678,7 @@ class BuiltInFunction(BaseFunction):
     return res.success(return_value)
   
   def no_visit_method(self, node, context):
-    raise Exception(f'No execute_{self.name} method defined')
+    raise Exception(f'Метод execute_{self.name} не визначено')
 
   def copy(self):
     copy = BuiltInFunction(self.name)
@@ -1688,7 +1687,7 @@ class BuiltInFunction(BaseFunction):
     return copy
 
   def __repr__(self):
-    return f"<built-in function {self.name}>"
+    return f"<вбудована функція {self.name}>"
 
   #####################################
 
@@ -1713,7 +1712,7 @@ class BuiltInFunction(BaseFunction):
         number = int(text)
         break
       except ValueError:
-        print(f"'{text}' must be an integer. Try again!")
+        print(f"'{text}' має бути цілим числом. Спробуйте ще раз!")
     return RTResult().success(Number(number))
   execute_input_int.arg_names = []
 
@@ -1744,7 +1743,7 @@ class BuiltInFunction(BaseFunction):
     if not isinstance(list_, List):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "First argument must be list",
+        "Перший аргумент має бути списком",
         exec_ctx
       ))
 
@@ -1759,14 +1758,14 @@ class BuiltInFunction(BaseFunction):
     if not isinstance(list_, List):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "First argument must be list",
+        "Перший аргумент має бути списком",
         exec_ctx
       ))
 
     if not isinstance(index, Number):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "Second argument must be number",
+        "Другий аргумент має бути числом",
         exec_ctx
       ))
 
@@ -1775,7 +1774,7 @@ class BuiltInFunction(BaseFunction):
     except:
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        'Element at this index could not be removed from list because index is out of bounds',
+        'Елемент за цим індексом не може бути видалений зі списку, оскільки індекс виходить за межі',
         exec_ctx
       ))
     return RTResult().success(element)
@@ -1788,14 +1787,14 @@ class BuiltInFunction(BaseFunction):
     if not isinstance(listA, List):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "First argument must be list",
+        "Перший аргумент має бути списком",
         exec_ctx
       ))
 
     if not isinstance(listB, List):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "Second argument must be list",
+        "Другий аргумент має бути списком",
         exec_ctx
       ))
 
@@ -1809,7 +1808,7 @@ class BuiltInFunction(BaseFunction):
     if not isinstance(list_, List):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "Argument must be list",
+        "Аргумент має бути списком",
         exec_ctx
       ))
 
@@ -1822,7 +1821,7 @@ class BuiltInFunction(BaseFunction):
     if not isinstance(fn, String):
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        "Second argument must be string",
+        "Другий аргумент має бути рядком",
         exec_ctx
       ))
 
@@ -1834,7 +1833,7 @@ class BuiltInFunction(BaseFunction):
     except Exception as e:
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        f"Failed to load script \"{fn}\"\n" + str(e),
+        f"Не вдалося завантажити скрипт \"{fn}\"\n" + str(e),
         exec_ctx
       ))
 
@@ -1843,13 +1842,49 @@ class BuiltInFunction(BaseFunction):
     if error:
       return RTResult().failure(RTError(
         self.pos_start, self.pos_end,
-        f"Failed to finish executing script \"{fn}\"\n" +
+        f"Не вдалося завершити виконання скрипту \"{fn}\"\n" +
         error.as_string(),
         exec_ctx
       ))
 
     return RTResult().success(Number.null)
   execute_run.arg_names = ["fn"]
+
+  def execute_get(self, exec_ctx):
+      fn = exec_ctx.symbol_table.get("fn")
+
+      if not isinstance(fn, String):
+          return RTResult().failure(RTError(
+              self.pos_start, self.pos_end,
+              "Другий аргумент має бути рядком",
+              exec_ctx  
+          ))
+
+      fn = fn.value
+
+      try:
+          with open(fn, "r") as f:
+              script = f.read()
+      except Exception as e:
+          return RTResult().failure(RTError(
+              self.pos_start, self.pos_end,
+              f"Не вдалося завантажити скрипт \"{fn}\"\n" + str(e),
+              exec_ctx
+          ))
+
+      _, error = run(fn, script)
+      
+      if error:
+          return RTResult().failure(RTError(
+              self.pos_start, self.pos_end,
+              f"Не вдалося завершити виконання скрипту \"{fn}\"\n" +
+              error.as_string(),
+              exec_ctx
+          ))
+
+      return RTResult().success(Number.null)
+  execute_get.arg_names = ["fn"]
+
 
 BuiltInFunction.print       = BuiltInFunction("print")
 BuiltInFunction.print_ret   = BuiltInFunction("print_ret")
@@ -1864,6 +1899,7 @@ BuiltInFunction.pop         = BuiltInFunction("pop")
 BuiltInFunction.extend      = BuiltInFunction("extend")
 BuiltInFunction.len					= BuiltInFunction("len")
 BuiltInFunction.run					= BuiltInFunction("run")
+BuiltInFunction.get					= BuiltInFunction("get")
 
 #######################################
 # CONTEXT
@@ -1908,7 +1944,7 @@ class Interpreter:
     return method(node, context)
 
   def no_visit_method(self, node, context):
-    raise Exception(f'No visit_{type(node).__name__} method defined')
+    raise Exception(f'Не визначено методу visit_{type(node).__name__}')
 
   ###################################
 
@@ -1987,9 +2023,9 @@ class Interpreter:
       result, error = left.get_comparison_lte(right)
     elif node.op_tok.type == TT_GTE:
       result, error = left.get_comparison_gte(right)
-    elif node.op_tok.matches(TT_KEYWORD, 'і'):
+    elif node.op_tok.matches(TT_KEYWORD, 'ТАКОЖ'):
       result, error = left.anded_by(right)
-    elif node.op_tok.matches(TT_KEYWORD, 'або'):
+    elif node.op_tok.matches(TT_KEYWORD, 'АБО'):
       result, error = left.ored_by(right)
 
     if error:
@@ -2006,7 +2042,7 @@ class Interpreter:
 
     if node.op_tok.type == TT_MINUS:
       number, error = number.multed_by(Number(-1))
-    elif node.op_tok.matches(TT_KEYWORD, 'не'):
+    elif node.op_tok.matches(TT_KEYWORD, 'НЕ'):
       number, error = number.notted()
 
     if error:
@@ -2156,23 +2192,24 @@ class Interpreter:
 #######################################
 
 global_symbol_table = SymbolTable()
-global_symbol_table.set("пусто", Number.null)
-global_symbol_table.set("брехня", Number.false)
-global_symbol_table.set("правда", Number.true)
-global_symbol_table.set("число_пі", Number.math_PI)
-global_symbol_table.set("друк", BuiltInFunction.print)
-global_symbol_table.set("друк_результату", BuiltInFunction.print_ret)
-global_symbol_table.set("ввід", BuiltInFunction.input)
-global_symbol_table.set("ввід_числа", BuiltInFunction.input_int)
-global_symbol_table.set("чи_число", BuiltInFunction.is_number)
-global_symbol_table.set("чи_рядок", BuiltInFunction.is_string)
-global_symbol_table.set("чи_масив", BuiltInFunction.is_list)
-global_symbol_table.set("чи_функція", BuiltInFunction.is_function)
-global_symbol_table.set("додати", BuiltInFunction.append)
-global_symbol_table.set("вилучити", BuiltInFunction.pop)
-global_symbol_table.set("розширити", BuiltInFunction.extend)
-global_symbol_table.set("довжина", BuiltInFunction.len)
-global_symbol_table.set("запуск", BuiltInFunction.run)
+global_symbol_table.set("НІЩО", Number.null)
+global_symbol_table.set("БРЕХНЯ", Number.false)
+global_symbol_table.set("ПРАВДА", Number.true)
+global_symbol_table.set("ПІ", Number.math_PI)
+global_symbol_table.set("ДРУК", BuiltInFunction.print)
+global_symbol_table.set("ДРУК_РЕЗУЛЬТАТУ", BuiltInFunction.print_ret)
+global_symbol_table.set("ВВІД", BuiltInFunction.input)
+global_symbol_table.set("ВВІД_ЧИСЛА", BuiltInFunction.input_int)
+global_symbol_table.set("ЧИ_ЧИСЛО", BuiltInFunction.is_number)
+global_symbol_table.set("ЧИ_РЯДОК", BuiltInFunction.is_string)
+global_symbol_table.set("ЧИ_МАСИВ", BuiltInFunction.is_list)
+global_symbol_table.set("ЧИ_ФУНКЦІЯ", BuiltInFunction.is_function)
+global_symbol_table.set("ДОДАТИ", BuiltInFunction.append)
+global_symbol_table.set("ВИЛУЧИТИ", BuiltInFunction.pop)
+global_symbol_table.set("РОЗШИРИТИ", BuiltInFunction.extend)
+global_symbol_table.set("ДОВЖИНА", BuiltInFunction.len)
+global_symbol_table.set("ЗАПУСК", BuiltInFunction.run)
+global_symbol_table.set("ОТРИМАТИ", BuiltInFunction.get)
 
 def run(fn, text):
   # Generate tokens
@@ -2187,7 +2224,7 @@ def run(fn, text):
 
   # Run program
   interpreter = Interpreter()
-  context = Context('<program>')
+  context = Context('<програма>')
   context.symbol_table = global_symbol_table
   result = interpreter.visit(ast.node, context)
 

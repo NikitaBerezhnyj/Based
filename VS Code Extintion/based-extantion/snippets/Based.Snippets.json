@@ -1,0 +1,54 @@
+{
+  "Initializing a variable / Ініціалізація змінної": {
+    "prefix": "ЗМІННА",
+    "body": ["ЗМІННА $1"],
+    "description": "Initializing a variable / Ініціалізація змінної"
+  },
+  "Output to the console / Вивід в консоль": {
+    "prefix": "ДРУК",
+    "body": ["ДРУК(\"$1\")"],
+    "description": "Output to the console / Вивід в консоль"
+  },
+  "User input / Користувацький ввід": {
+    "prefix": "ВВІД",
+    "body": ["ВВІД()"],
+    "description": "User input / Користувацький ввід"
+  },
+  "User input of a number / Користувацький ввід числа": {
+    "prefix": "ВВІД_ЧИСЛА",
+    "body": ["ВВІД_ЧИСЛА('$1')"],
+    "description": "User input of a number / Користувацький ввід числа"
+  },
+  "Conditional construct if-else_if-else / Умовна конструкція якщо-інакше_якщо-інакше": {
+    "prefix": "ЯКЩО",
+    "body": [
+      "ЯКЩО ${1:умова} ТОДІ",
+      "    ${2:дії}",
+      "ІНАКШЕ_ЯКЩО ${3:умова} ТОДІ",
+      "    ${4:дії}",
+      "ІНАКШЕ",
+      "    ${5:дії}",
+      "КІНЕЦЬ"
+    ],
+    "description": "Conditional construct if-else_if-else / Умовна конструкція якщо-інакше_якщо-інакше"
+  },
+  "Loop while / Цикл поки": {
+    "prefix": "ПОКИ",
+    "body": ["ПОКИ ${1:умова} ТОДІ", "    ${2:тіло}", "   КІНЕЦЬ"],
+    "description": "Loop while / Цикл поки"
+  },
+  "Loop for / Цикл для_кожного": {
+    "prefix": "ДЛЯ",
+    "body": [
+      "ДЛЯ ${1:параметр} = 0 ДО ${2:ліміт} ТОДІ",
+      "    ${3:тіло}",
+      "КІНЕЦЬ"
+    ],
+    "description": "Loop for / Цикл для_кожного"
+  },
+  "Declaring a function / Оголошення функції": {
+    "prefix": "ФУНКЦІЯ",
+    "body": ["ФУНКЦІЯ ${1:назва}(${2:параметр})", "    ${3:тіло}", "КІНЕЦЬ"],
+    "description": "Declaring a function / Оголошення функції"
+  }
+}
