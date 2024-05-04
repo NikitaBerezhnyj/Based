@@ -26,6 +26,8 @@ Based repository has [Ukrainian :ukraine:](#мова-програмування-
     - [Приклади коду](#приклади-коду)
     - [Команди інтерпретатора](#команди-інтерпретатора)
   - [Корисні посилання](#корисні-посилання)
+- [\<\<\<\<\<\<\< HEAD](#-head)
+  - [Розширення для VS code](#розширення-для-vs-code)
 - [Programming language Based :uk:](#programming-language-based-uk)
   - [Programming language Based](#programming-language-based)
     - [Installation](#installation)
@@ -35,6 +37,8 @@ Based repository has [Ukrainian :ukraine:](#мова-програмування-
     - [Code examples](#code-examples)
     - [Interpreter commands](#interpreter-commands)
   - [Useful links](#useful-links)
+- [**_Project documentation:_** https://nub-project-docs.netlify.app](#project-documentation-httpsnub-project-docsnetlifyapp)
+  - [Extensions for VS code](#extensions-for-vs-code)
 
 ---
 
@@ -423,6 +427,52 @@ _***Примітка!*** Шлях до файлу, який ми імпорту�
 
 ---
 
+# <<<<<<< HEAD
+
+**_[Дивитись код IDE](https://github.com/NikitaBerezhnyj/NUB_IDE)_**
+
+## Розширення для VS code
+
+Розширення додає підтримку мови програмування Based у VS Code.
+
+**_Функціональність_**
+
+- Підсвічування синтаксису для файлів .based
+- Автодоповнення ключових слів мови Based
+
+**_Використання_**
+
+Після встановлення розширення, VS Code автоматично розпізнаватиме файли .based і застосовуватиме до них підсвічування і автодоповнення.
+
+**_Установка_**
+
+На даний момент розширення не доступне в маркетплейсі VS Code, тож його можна встановити тільки клонувавши репозиторій та встановивши його локально. Для цього вам необхідно буде виконати наступні кроки:
+
+1. Копіювати репозиторій на свій ПК через термінал
+
+```bash
+git clone https://github.com/NikitaBerezhnyj/Based.git
+```
+
+2. Потім знайти теку VS code на вашому ПК
+3. Скопіювати теку based-extension до теки з іншими розширеннями
+
+**_Підтримувані мови:_** Based (.based)
+
+**_Залежності:_** Не має
+
+**_Версія:_** 1.0.0
+
+---
+
+**_[Дивитись код розширення](./VS%20Code%20Extintion/based-extantion/)_**
+
+---
+
+<!-- _________________________________________________________________ -->
+
+> > > > > > > ed88eedef1a23de450e2f2abc085286cd7764d31
+
 # Programming language Based :uk:
 
 <p align='center'>
@@ -447,6 +497,8 @@ Its syntax is deliberately made as simple and concise as possible, without unnec
     - [Приклади коду](#приклади-коду)
     - [Команди інтерпретатора](#команди-інтерпретатора)
   - [Корисні посилання](#корисні-посилання)
+- [\<\<\<\<\<\<\< HEAD](#-head)
+  - [Розширення для VS code](#розширення-для-vs-code)
 - [Programming language Based :uk:](#programming-language-based-uk)
   - [Programming language Based](#programming-language-based)
     - [Installation](#installation)
@@ -456,6 +508,8 @@ Its syntax is deliberately made as simple and concise as possible, without unnec
     - [Code examples](#code-examples)
     - [Interpreter commands](#interpreter-commands)
   - [Useful links](#useful-links)
+- [**_Project documentation:_** https://nub-project-docs.netlify.app](#project-documentation-httpsnub-project-docsnetlifyapp)
+  - [Extensions for VS code](#extensions-for-vs-code)
 
 ---
 
@@ -820,4 +874,70 @@ I've tried to make the Based syntax simple and easy to understand for beginners,
 
 **_Extensions for VS code:_** [https://github.com/NikitaBerezhnyj/Based_Language_Support_for_VS_Code](https://github.com/NikitaBerezhnyj/Based_Language_Support_for_VS_Code)
 
+<<<<<<< HEAD
 **_Project documentation:_** [https://nub-project-docs.netlify.app](https://nub-project-docs.netlify.app)
+=======
+NUB IDE is a modern integrated development environment for the programming languages [NikLang](https://github.com/NikitaBerezhnyj/NikLang), [Udav](https://github.com/NikitaBerezhnyj/Udav) and [Based](https://github.com/NikitaBerezhnyj/Based). It provides a user-friendly and functional interface for writing and debugging code.
+
+Features:
+
+- Syntax highlighting for Based, Udav, and NikLang languages
+
+- Automatic code completion
+
+- Built-in terminal with custom commands to control the IDE
+
+- Supports cross-platform application development (Windows, Linux, MacOS)
+
+- Quick and convenient project search
+
+- Real-time code editing and debugging
+
+- Intuitive graphical interface based on React
+
+NUB IDE was created to simplify and speed up development in Based, Udav, and NikLang as much as possible. It combines modern design, ease of use, and all the tools you need to be productive.
+
+You can download and learn more about NUB IDE [here](https://github.com/NikitaBerezhnyj/NUB_IDE)
+
+---
+
+**_[See the IDE code](https://github.com/NikitaBerezhnyj/NUB_IDE)_**
+
+## Extensions for VS code
+
+The extension adds support for the Based programming language to VS Code.
+
+**_Features_**.
+
+- Syntax highlighting for .based files
+- Auto-completion of Based language keywords
+
+**_Usage_**.
+
+After installing the extension, VS Code will automatically recognize .based files and apply syntax highlighting and auto-completion to them.
+
+**_Installation_**
+
+At the moment, the extension is not available in the VS Code marketplace, so you can install it only by cloning the repository and installing it locally. To do this, you will need to follow these steps:
+
+1. Copy the repository to your PC using the terminal
+
+```bash
+git clone https://github.com/NikitaBerezhnyj/Based.git
+```
+
+2. Then find the VS code folder on your PC
+
+3. Copy the based-extension folder to the folder with the other extensions
+
+**_Supported languages:_** Based (.based)
+
+**_Dependencies:_** None
+
+**_Version:_** 1.0.0
+
+---
+
+**_[See the extension code](./VS%20Code%20Extintion/based-extantion/)_**
+
+> > > > > > > ed88eedef1a23de450e2f2abc085286cd7764d31
