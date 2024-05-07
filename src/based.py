@@ -1660,6 +1660,8 @@ class Function(BaseFunction):
     return f"<функція {self.name}>"
 
 class BuiltInFunction(BaseFunction):
+  run_file_path = ""
+
   def __init__(self, name):
     super().__init__(name)
 
@@ -1816,38 +1818,39 @@ class BuiltInFunction(BaseFunction):
   execute_len.arg_names = ["list"]
 
   def execute_run(self, exec_ctx):
-    fn = exec_ctx.symbol_table.get("fn")
+        fn = exec_ctx.symbol_table.get("fn")
 
-    if not isinstance(fn, String):
-      return RTResult().failure(RTError(
-        self.pos_start, self.pos_end,
-        "Другий аргумент має бути рядком",
-        exec_ctx
-      ))
+        if not isinstance(fn, String):
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                "Другий аргумент має бути рядком",
+                exec_ctx
+            ))
 
-    fn = fn.value
+        fn = fn.value
+        BuiltInFunction.run_file_path = "/".join(fn.split("/")[:-1])
 
-    try:
-      with open(fn, "r") as f:
-        script = f.read()
-    except Exception as e:
-      return RTResult().failure(RTError(
-        self.pos_start, self.pos_end,
-        f"Не вдалося завантажити скрипт \"{fn}\"\n" + str(e),
-        exec_ctx
-      ))
+        try:
+            with open(fn, "r") as f:
+                script = f.read()
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Не вдалося завантажити скрипт \"{fn}\"\n" + str(e),
+                exec_ctx
+            ))
 
-    _, error = run(fn, script)
-    
-    if error:
-      return RTResult().failure(RTError(
-        self.pos_start, self.pos_end,
-        f"Не вдалося завершити виконання скрипту \"{fn}\"\n" +
-        error.as_string(),
-        exec_ctx
-      ))
+        _, error = run(fn, script)
+        
+        if error:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Не вдалося завершити виконання скрипту \"{fn}\"\n" +
+                error.as_string(),
+                exec_ctx
+            ))
 
-    return RTResult().success(Number.null)
+        return RTResult().success(Number.null)
   execute_run.arg_names = ["fn"]
 
   def execute_get(self, exec_ctx):
@@ -1859,8 +1862,10 @@ class BuiltInFunction(BaseFunction):
               "Другий аргумент має бути рядком",
               exec_ctx  
           ))
-
-      fn = fn.value
+      if BuiltInFunction.run_file_path != "":
+        fn = BuiltInFunction.run_file_path + "/" + fn.value
+      else:
+        fn = fn.value
 
       try:
           with open(fn, "r") as f:
@@ -1882,6 +1887,7 @@ class BuiltInFunction(BaseFunction):
               exec_ctx
           ))
 
+      BuiltInFunction.run_file_path = ""
       return RTResult().success(Number.null)
   execute_get.arg_names = ["fn"]
 
